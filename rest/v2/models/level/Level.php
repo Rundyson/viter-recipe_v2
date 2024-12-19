@@ -28,7 +28,7 @@ class Level
         try {
           $sql = "select * from {$this->tblLevel} ";
           $sql .= "order by level_is_active desc, ";
-          $sql .= "level_aid asc ";
+          $sql .= "level_title ";
           $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
           $query = false;
@@ -41,7 +41,7 @@ class Level
         try {
           $sql = "select * from {$this->tblLevel} ";
           $sql .= "order by level_is_active desc, ";
-          $sql .= "level_aid asc ";
+          $sql .= "level_title ";
           $sql .= "limit :start, ";
           $sql .= ":total ";
           $query = $this->connection->prepare($sql);
@@ -53,6 +53,57 @@ class Level
           $query = false;
       }
       return $query;
+  }
+  public function search()
+  {
+    try {
+      $sql = "select * from {$this->tblLevel} ";
+      $sql .= "where level_title like :level_title ";
+      $sql .= "order by level_is_active desc, ";
+      $sql .= "level_title ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "level_title" => "%{$this->level_search}%",
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
+  public function filterActive()
+  {
+    try {
+      $sql = "select * from {$this->tblLevel} ";
+      $sql .= "where level_is_active = :level_is_active ";
+      $sql .= "order by level_is_active desc, ";
+      $sql .= "level_is_active ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "level_is_active" => $this->level_is_active,
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+  public function filterActiveSearch()
+  {
+    try {
+      $sql = "select * from {$this->tblLevel} ";
+      $sql .= "where level_is_active = :level_is_active ";
+      $sql .= "and level_title like :level_title ";
+      $sql .= "order by level_is_active desc, ";
+      $sql .= "level_title ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "level_is_active" => $this->level_is_active,
+        "level_title" => "%{$this->level_search}%",
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
   }
       public function readById()
       {

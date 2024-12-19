@@ -11,6 +11,7 @@ if (array_key_exists("levelid", $_GET)) {
   // get data
   $level->level_aid = $_GET['levelid'];
   checkId($level->level_aid);
+  isAssociated($level);
   
 
   $query = checkDelete($level);

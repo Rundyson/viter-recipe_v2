@@ -5,14 +5,14 @@ require '../../core/header.php';
 require '../../core/functions.php';
 // require 'functions.php';
 // use needed classes
-require '../../models/level/Level.php';
+require '../../models/recipe/Recipe.php';
 
 
 // check database connection
 $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
-$level = new Level($conn);
+$recipe = new Recipe($conn);
 $response = new Response();
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
@@ -21,19 +21,19 @@ if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
     if (array_key_exists("start", $_GET)) {
         // get data
         // get task id from query string
-        $level->level_start = $_GET['start'];
-        $level->level_total = 1;
+        $recipe->recipe_start = $_GET['start'];
+        $recipe->recipe_total = 5;
         //check to see if task id in query string is not empty and is number, if not return json error
-        checkLimitId($level->level_start, $level->level_total);
+        checkLimitId($recipe->recipe_start, $recipe->recipe_total);
 
-        $query = checkReadLimit($level);
-        $total_result = checkReadAll($level);
+        $query = checkReadLimit($recipe);
+        $total_result = checkReadAll($recipe);
         http_response_code(200);
         checkReadQuery(
             $query,
             $total_result,
-            $level->level_total,
-            $level->level_start
+            $recipe->recipe_total,
+            $recipe->recipe_start
         );
     }
     // return 404 error if endpoint not available

@@ -21,7 +21,10 @@ if (array_key_exists("recipeid", $_GET)) {
     $recipe->recipe_datetime = date("Y-m-d H:i:s");
     $recipe_title_old = strtolower($data["recipe_title_old"]);
     // checkId($recipe->recipe_aid);
-    compareName($recipe, $recipe_title_old, $recipe->recipe_title);
+    //checks current data to avoid same entries from being updated
+// $food_name_old = checkIndex($data, 'food_name_old');
+// compareName($food, $food_name_old, $food->food_name);
+// checkId($food->food_aid);
 
     $query = checkUpdate($recipe);
     returnSuccess($recipe, "recipe", $query);

@@ -13,14 +13,15 @@ import ToastSuccess from '../partials/ToastSuccess'
 import ModalError from '../partials/modals/ModalError'
 import ModalValidation from '../partials/modals/ModalValidation'
 
+
 const Recipe = () => {
     const {dispatch, store} = React.useContext(StoreContext);
-    const [itemEdit, setItemEdit] = React.useState(null);
+    const [isRecipeEdit, setIsRecipeEdit] = React.useState(null);
 
     const handleAdd = () => {
       dispatch(setIsAdd(true));
-      setItemEdit(null);
-    }
+      setIsRecipeEdit(null);
+    };
   return (
     <>
     <section className="layout-main">
@@ -30,12 +31,13 @@ const Recipe = () => {
                     <Header title="Recipe" subtitle="Manage Recipes"/>
                     <div className="p-8">
                       <div className="flex justify-between items-center">
-                        <SearchBar/>
+                        <div></div>
                         <button className="btn btn-add" onClick={handleAdd}>
                           <Plus size={16}/> Add New
                         </button>
                       </div>
-                      <RecipeTable setItemEdit={setItemEdit}/>
+                      <RecipeTable isRecipeEdit={isRecipeEdit}
+                setIsRecipeEdit={setIsRecipeEdit}/>
                     </div>
                     <Footer/>
                 </main>
@@ -45,7 +47,12 @@ const Recipe = () => {
         {store.error && <ModalError/>}
       {store.success && <ToastSuccess/>}
         {/* <SpinnerWindow/> */}
-        {store.isAdd && <ModalAddRecipe itemEdit={itemEdit}/>}
+        {store.isAdd && (
+        <ModalAddRecipe
+          isRecipeEdit={isRecipeEdit}
+          setIsrecipeEdit={setIsRecipeEdit}
+        />
+      )}
     </>
   )
 }

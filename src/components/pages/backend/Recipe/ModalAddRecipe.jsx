@@ -23,7 +23,7 @@ import useUploadPhoto from "@/components/custom-hook/useUploadPhoto";
 import { imgPath } from "@/components/helpers/functions-general";
 import useQueryData from "@/components/custom-hook/useQueryData";
 
-const ModalAddRecipe = ({ itemEdit }) => {
+const ModalAddRecipe = ({ isRecipeEdit }) => {
   const { dispatch } = React.useContext(StoreContext);
 
  
@@ -60,8 +60,8 @@ const ModalAddRecipe = ({ itemEdit }) => {
   const mutation = useMutation({
     mutationFn: (values) =>
       queryData(
-        itemEdit ? `/v2/recipe/${itemEdit.recipe_aid}` : `/v2/recipe`,
-        itemEdit ? "put" : "post",
+        isRecipeEdit ? `/v2/recipe/${isRecipeEdit.recipe_aid}` : `/v2/recipe`,
+        isRecipeEdit ? "put" : "post",
         values
       ),
     onSuccess: (data) => {
@@ -87,17 +87,17 @@ const ModalAddRecipe = ({ itemEdit }) => {
  
 
   const initVal = {
-    recipe_title_old: itemEdit ? itemEdit.recipe_title : "",
-    recipe_title: itemEdit ? itemEdit.recipe_title : "",
-    recipe_level: itemEdit ? itemEdit.recipe_level : "",
-    recipe_category: itemEdit ? itemEdit.recipe_category : "",
-    recipe_serving: itemEdit ? itemEdit.recipe_serving : "",
-    recipe_prep_time: itemEdit ? itemEdit.recipe_prep_time : "",
-    recipe_description: itemEdit ? itemEdit.recipe_description : "",
-    recipe_instruction: itemEdit ? itemEdit.recipe_instruction : "",
+    recipe_title_old: isRecipeEdit ? isRecipeEdit.recipe_title : "",
+    recipe_title: isRecipeEdit ? isRecipeEdit.recipe_title : "",
+    recipe_level: isRecipeEdit ? isRecipeEdit.recipe_level : "",
+    recipe_category: isRecipeEdit ? isRecipeEdit.recipe_category : "",
+    recipe_serving: isRecipeEdit ? isRecipeEdit.recipe_serving : "",
+    recipe_prep_time: isRecipeEdit ? isRecipeEdit.recipe_prep_time : "",
+    recipe_description: isRecipeEdit ? isRecipeEdit.recipe_description : "",
+    recipe_instruction: isRecipeEdit ? isRecipeEdit.recipe_instruction : "",
 
-    recipe_ingredients: itemEdit
-      ? JSON.parse(itemEdit.recipe_ingredients)
+    recipe_ingredients: isRecipeEdit
+      ? JSON.parse(isRecipeEdit.recipe_ingredients)
       : [{ ingredients: "", amount: "", unit: "" }],
   };
   const yupSchema = Yup.object({
@@ -127,12 +127,12 @@ const ModalAddRecipe = ({ itemEdit }) => {
               mutation.mutate({
                 ...values,
                 recipe_image:
-                  (itemEdit?.recipe_image === "" && photo) ||
+                  (isRecipeEdit?.recipe_image === "" && photo) ||
                   (!photo && "") ||
                   (photo === undefined && "") ||
-                  (photo && itemEdit?.recipe_image !== photo?.name)
+                  (photo && isRecipeEdit?.recipe_image !== photo?.name)
                     ? photo?.name || ""
-                    : itemEdit?.recipe_image || "",
+                    : isRecipeEdit?.recipe_image || "",
               });
               uploadPhoto();
             }}
@@ -145,7 +145,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
                       <h3 className="mb-0">Information</h3>
 
                       <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
-                        {itemEdit === null && photo === null ? (
+                        {isRecipeEdit === null && photo === null ? (
                           <div className="w-full  rounded-md flex justify-center items-center flex-col h-full">
                             <ImagePlusIcon
                               size={50}
@@ -161,7 +161,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
                             src={
                               photo
                                 ? URL.createObjectURL(photo) // preview
-                                : imgPath + "/" + itemEdit?.recipe_image // check db
+                                : imgPath + "/" + isRecipeEdit?.recipe_image // check db
                             }
                             alt="Recipe photo"
                             className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
@@ -344,7 +344,7 @@ const ModalAddRecipe = ({ itemEdit }) => {
                   <div className="flex justify-end gap-3 mt-5">
                     <button className="btn btn-accent" type="submit">
                       {mutation.isPending && <SpinnerButton />}
-                      {itemEdit ? "Save" : "Add"}
+                      {isRecipeEdit ? "Save" : "Add"}
                     </button>
                     <button
                       className="btn btn-cancel"

@@ -18,9 +18,9 @@ if (array_key_exists("levelid", $_GET)) {
   checkId($level->level_aid);
 
 //checks current data to avoid same entries from being updated
-// $level_name_old = checkIndex($data, 'level_name_old');
-// compareName($level, $level_name_old, $level->level_name);
-// checkId($level->level_aid);
+$level_name_old = checkIndex($data, 'level_name_old');
+compareName($level, $level_name_old, $level->level_title);
+checkId($level->level_aid);
 
   // update
   $query = checkUpdate($level);

@@ -7,8 +7,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 
 Header set Access-Control-Allow-Origin *
 
-#################################### ALL FOR DEVELOPER #################################
-
 RewriteRule ^upload-photo$ core/upload-photo.php [L]
 
 
