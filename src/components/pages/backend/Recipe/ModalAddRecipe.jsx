@@ -26,35 +26,30 @@ import useQueryData from "@/components/custom-hook/useQueryData";
 const ModalAddRecipe = ({ isRecipeEdit }) => {
   const { dispatch } = React.useContext(StoreContext);
 
- 
   const { uploadPhoto, handleChangePhoto, photo } =
     useUploadPhoto("/v2/upload-photo");
-    const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState("");
 
-    const handleChange = (event) => {
-      setValue(event.target.value);
-    };
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
 
-    const {
-      isFetching,
-      error,
-      data: categ, 
-      status,
-    } = 
-    useQueryData(
-      `/v2/category`, //endpoint
-      "get", //method
-      "category" //key
-    );
- 
-    const { 
-      data: level, 
-    } = useQueryData(
-      `/v2/level`, //endpoint
-      "get", //method
-      "level" //key
-    );
+  const {
+    isFetching,
+    error,
+    data: categ,
+    status,
+  } = useQueryData(
+    `/v2/category`, //endpoint
+    "get", //method
+    "category" //key
+  );
 
+  const { data: level } = useQueryData(
+    `/v2/level`, //endpoint
+    "get", //method
+    "level" //key
+  );
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -82,9 +77,6 @@ const ModalAddRecipe = ({ isRecipeEdit }) => {
   });
 
   const handleClose = () => dispatch(setIsAdd(false));
-  
-
- 
 
   const initVal = {
     recipe_title_old: isRecipeEdit ? isRecipeEdit.recipe_title : "",
@@ -112,7 +104,7 @@ const ModalAddRecipe = ({ isRecipeEdit }) => {
 
   return (
     <ModalWrapper>
-      <div className="modal-main bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[1300px] w-full rounded-md border border-line">
+      <div className="modal-main bg-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-[1300px] w-full rounded-md border border-line ">
         <div className="modal-header flex gap-2 p-2 items-center border-b border-line mb-2 ">
           <span className="text-body">Add Recipe</span>
           <button className="ml-auto" onClick={handleClose}>
@@ -195,20 +187,19 @@ const ModalAddRecipe = ({ isRecipeEdit }) => {
                       </div>
 
                       <div className="input-wrap">
-                        <InputSelect 
-                        label="Food Category" 
-                        name="recipe_category"
-                        onChange={handleChange}>
-                          <option value="hidden" >
-                            Select Category
-                          </option>
+                        <InputSelect
+                          label="Food Category"
+                          name="recipe_category"
+                          onChange={handleChange}
+                        >
+                          <option value="hidden">Select Category</option>
                           {categ?.data.map((item, key) => {
                             return (
                               <>
                                 {item.category_is_active === 1 && (
                                   <option key={key} value={item.category_aid}>
-                                  {item.category_title}
-                                </option>
+                                    {item.category_title}
+                                  </option>
                                 )}
                               </>
                             );
@@ -217,25 +208,23 @@ const ModalAddRecipe = ({ isRecipeEdit }) => {
                       </div>
 
                       <div className="input-wrap">
-                        <InputSelect 
-                        label="Level" 
-                        name="recipe_level"
-                        onChange={handleChange}>
-                          <option value="hidden" >
-                            Select Level
-                          </option>
+                        <InputSelect
+                          label="Level"
+                          name="recipe_level"
+                          onChange={handleChange}
+                        >
+                          <option value="hidden">Select Level</option>
                           {level?.data.map((item, key) => {
                             return (
                               <>
                                 {item.level_is_active === 1 && (
                                   <option key={key} value={item.level_aid}>
-                                  {item.level_title}
-                                </option>
+                                    {item.level_title}
+                                  </option>
                                 )}
                               </>
                             );
                           })}
-                          
                         </InputSelect>
                       </div>
 

@@ -10,8 +10,9 @@ import Header from '../partials/Header'
 import SearchBar from '../partials/SearchBar'
 import Footer from '../partials/Footer'
 import ToastSuccess from '../partials/ToastSuccess'
-import ModalError from '../partials/modals/ModalError'
 import ModalValidation from '../partials/modals/ModalValidation'
+import ModalError from '../partials/modals/ModalError'
+
 
 
 const Recipe = () => {

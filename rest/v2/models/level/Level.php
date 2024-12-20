@@ -161,6 +161,20 @@ class Level
     }
     return $query;
   }
+  public function checkAssociation()
+  {
+    try {
+      $sql = "select level_aid from {$this->tblLevel} ";
+      $sql .= "where level_aid = :level_aid ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "level_aid" => "{$this->level_aid}",
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
 
   public function update()
   {

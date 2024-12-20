@@ -25,7 +25,7 @@ $recipe->recipe_datetime = date("Y-m-d H:i:s");
 
 
 
-// isNameExist($recipe, $recipe->recipe_title);
+isNameExist($recipe, $recipe->recipe_title);
 
 $query = checkCreate($recipe);
 returnSuccess($recipe, "recipe", $query);
