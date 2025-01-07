@@ -24,7 +24,7 @@ const HomePage = () => {
     <>
         <Headings/>
         <BannerSlider result={result}/>
-        <LatestRecipe result={result}/>
+        <LatestRecipe/>
         <TopRating/>
         <Footnote/>
     </>
